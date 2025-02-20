@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
@@ -10,10 +11,13 @@ import { createContext, useEffect, useState } from "react";
 import { auth } from "./firebase";
 
 export const MainContext = createContext();
+// eslint-disable-next-line react/prop-types
 const Authcontext = ({ children }) => {
   //   TODU:
   const [user, setUser] = useState(null);
   const [loding, setLoding] = useState(true);
+
+  console.log("user is ------", user);
   // log in func
   const handelLogin = (email, password) => {
     setLoding(true);
@@ -23,6 +27,7 @@ const Authcontext = ({ children }) => {
   const provider = new GoogleAuthProvider();
   const handelGoogleLogin = () => {
     setLoding(true);
+
     return signInWithPopup(auth, provider);
   };
   //   handel sing up
@@ -32,12 +37,12 @@ const Authcontext = ({ children }) => {
   };
 
   //   handel log out
-  const handelLogOut = () => {
+  const handelLogOut = async () => {
     return signOut(auth)
       .then(() => {
         setUser(null);
       })
-      .catch((error) => {
+      .catch(() => {
         // console.log(error.message);
       });
   };

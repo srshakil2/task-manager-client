@@ -1,13 +1,23 @@
 import { useContext } from "react";
 import { MainContext } from "../Providers/AuthContext";
+import Navber from "./Navber/Navber";
+import { Outlet } from "react-router-dom";
+import Footer from "./Footer/Footer";
 
 const Home = () => {
-  const { name } = useContext(MainContext);
+  const { user } = useContext(MainContext);
+  console.log(user);
   return (
     <div>
-      <p className="textarea-md font-semibold text-sky-900">
-        this is Home {name}
-      </p>
+      <div>
+        <Navber></Navber>
+      </div>
+      <div className="min-h-screen -mt-16">
+        <Outlet></Outlet>
+      </div>
+      <div>
+        <Footer></Footer>
+      </div>
     </div>
   );
 };

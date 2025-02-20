@@ -7,11 +7,16 @@ import Home from "./Components/Home";
 import LogIn from "./Components/Froms/LogIn";
 import SingUp from "./Components/Froms/SingUp";
 import Authcontext from "./Providers/AuthContext";
+import Privet from "./Providers/Privet";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home></Home>,
+    element: (
+      <Privet>
+        <Home></Home>
+      </Privet>
+    ),
   },
   {
     path: "/login",

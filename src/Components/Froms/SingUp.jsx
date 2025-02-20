@@ -1,16 +1,42 @@
 import { Link } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
+import { useContext, useState } from "react";
+import { MainContext } from "../../Providers/AuthContext";
 
 const SingUp = () => {
+  const [userName, setUserName] = useState("");
+  const { handelSingUp } = useContext(MainContext);
+
+  // handel name fild
+  const hendelName = (e) => {
+    e.preventDefault();
+    setUserName(e.target.value);
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  // Todu:
   const onSubmit = (data) => {
-    console.log("data", data);
+    // console.log(data);
+    const userData = {
+      id: data?.email,
+      name: userName,
+      email: data?.email,
+      password: data?.password,
+    };
+
+    handelSingUp(userData?.email, userData?.password)
+      .then(() => {
+        // console.log();
+        // Tudu:
+      })
+      .catch(() => {
+        // console.log();
+      });
   };
 
   return (
@@ -28,7 +54,7 @@ const SingUp = () => {
 
             <input
               type="text"
-              // onKeyUp={(e) => hendelName(e)}
+              onKeyUp={(e) => hendelName(e)}
               placeholder="Frist Name"
               {...register("fristname", { required: true })}
               className="input input-bordered w-full"

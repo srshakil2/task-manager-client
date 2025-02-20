@@ -1,7 +1,12 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { Link, useNavigate } from "react-router-dom";
+import { MainContext } from "../../Providers/AuthContext";
 
 const LogIn = () => {
+  const { handelGoogleLogin, handelLogin } = useContext(MainContext);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -9,7 +14,33 @@ const LogIn = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("data", data);
+    // console.log("data", data);
+    handelLogin(data?.email, data?.password)
+      .then(() => {
+        // console.log(res)
+      })
+      .catch(() => {
+        // console.log(err)
+      });
+  };
+
+  //   google log in
+  const googleLoginUser = () => {
+    handelGoogleLogin()
+      .then((res) => {
+        // TODO:
+        console.log(res?.user?.photoURL);
+        // const userInfo = {
+        //   name: res?.user?.displayName,
+        //   email: res?.user?.email,
+        //   photoUrl: res?.user?.photoURL,
+        // };
+        //  Todu:---------
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log("vuya gamil", err);
+      });
   };
 
   return (
@@ -17,6 +48,10 @@ const LogIn = () => {
       <div className="card bg-base-100 shrink-0 shadow-2xl md:w-6/12">
         <div className="text-center mt-10 md:w-1/2 mx-auto">
           <p className="w-full text-3xl font-bold">Log In Now</p>
+          <div onClick={googleLoginUser} className="btn mt-7 md:w-1/2 mx-auto ">
+            <FcGoogle className="text-3xl"></FcGoogle>
+            <span className="text-xl text-nowrap">Google LogIn</span>
+          </div>
         </div>
         <form className="card-body" onSubmit={handleSubmit(onSubmit)}>
           {/* email */}
