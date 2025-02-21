@@ -29,12 +29,29 @@ const Task = () => {
   }, [data]);
 
   //
-  const handleDragEnd = () => {
-    // if (!result.destination) return; // If dropped outside, do nothing
-    // const newItems = [...items];
-    // const [movedItem] = newItems.splice(result.source.index, 1);
-    // newItems.splice(result.destination.index, 0, movedItem);
-    // setItems(newItems);
+  //   TODO handel
+  const handleTodo = (result) => {
+    if (!result.destination) return; // If dropped outside, do nothing
+    const newItems = [...todoItem];
+    const [movedItem] = newItems.splice(result.source.index, 1);
+    newItems.splice(result.destination.index, 0, movedItem);
+    setTodoItem(newItems);
+  };
+  //   Inprogress handel
+  const handleInprogress = (result) => {
+    if (!result.destination) return; // If dropped outside, do nothing
+    const newItems = [...inprogressItem];
+    const [movedItem] = newItems.splice(result.source.index, 1);
+    newItems.splice(result.destination.index, 0, movedItem);
+    setInprogressItem(newItems);
+  };
+  //   handel done
+  const handleDone = (result) => {
+    if (!result.destination) return; // If dropped outside, do nothing
+    const newItems = [...doneItem];
+    const [movedItem] = newItems.splice(result.source.index, 1);
+    newItems.splice(result.destination.index, 0, movedItem);
+    setDoneItem(newItems);
   };
   //
   return (
@@ -50,10 +67,10 @@ const Task = () => {
       <h2 className="text-2xl font-bold text-center mb-4">Drag & Drop</h2>
       {/* main parent dnd */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:px-10 md:px-7 px-5">
-        {/* dndtodo */}
+        {/* dnd todo */}
         <div className="p-4 bg-purple-100 rounded-lg">
           <p className="text-center text-2xl font-bold mb-5">To-Do</p>
-          <DragDropContext onDragEnd={handleDragEnd}>
+          <DragDropContext onDragEnd={handleTodo}>
             <Droppable droppableId="droppable-list">
               {(provided) => (
                 <div
@@ -74,7 +91,7 @@ const Task = () => {
                           {...provided.dragHandleProps}
                           className="card bg-base-200 p-3 shadow-lg flex items-center"
                         >
-                          <Todo item={item}></Todo>
+                          <Todo item={item} refetch={refetch}></Todo>
                         </div>
                       )}
                     </Draggable>
@@ -88,7 +105,7 @@ const Task = () => {
         {/* dnd inprogress */}
         <div className="p-4 rounded-lg bg-lime-100">
           <p className="text-center text-2xl font-bold mb-5">In Progress</p>
-          <DragDropContext onDragEnd={handleDragEnd}>
+          <DragDropContext onDragEnd={handleInprogress}>
             <Droppable droppableId="droppable-list">
               {(provided) => (
                 <div
@@ -109,7 +126,7 @@ const Task = () => {
                           {...provided.dragHandleProps}
                           className="card bg-base-200 p-3 shadow-lg flex items-center"
                         >
-                          <Todo item={item}></Todo>
+                          <Todo item={item} refetch={refetch}></Todo>
                         </div>
                       )}
                     </Draggable>
@@ -124,7 +141,7 @@ const Task = () => {
         {/* dnd done */}
         <div className=" p-4 rounded-lg bg-green-100">
           <p className="text-center text-2xl font-bold mb-5">Done</p>
-          <DragDropContext onDragEnd={handleDragEnd}>
+          <DragDropContext onDragEnd={handleDone}>
             <Droppable droppableId="droppable-list">
               {(provided) => (
                 <div
@@ -145,7 +162,7 @@ const Task = () => {
                           {...provided.dragHandleProps}
                           className="card bg-base-200 p-3 shadow-lg flex items-center"
                         >
-                          <Todo item={item}></Todo>
+                          <Todo item={item} refetch={refetch}></Todo>
                         </div>
                       )}
                     </Draggable>
