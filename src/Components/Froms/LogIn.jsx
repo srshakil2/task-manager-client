@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { MainContext } from "../../Providers/AuthContext";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const LogIn = () => {
   const { handelGoogleLogin, handelLogin } = useContext(MainContext);
@@ -17,7 +19,14 @@ const LogIn = () => {
     // console.log("data", data);
     handelLogin(data?.email, data?.password)
       .then(() => {
-        // console.log(res)
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Log in success",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/");
       })
       .catch(() => {
         // console.log(err)
@@ -29,13 +38,29 @@ const LogIn = () => {
     handelGoogleLogin()
       .then((res) => {
         // TODO:
-        console.log(res?.user?.photoURL);
-        // const userInfo = {
-        //   name: res?.user?.displayName,
-        //   email: res?.user?.email,
-        //   photoUrl: res?.user?.photoURL,
-        // };
-        //  Todu:---------
+
+        const userInfo = {
+          id: res?.user?.email,
+          name: res?.user?.displayName,
+          email: res?.user?.email,
+          photoUrl: res?.user?.photoURL,
+        };
+        axios
+          .post("http://localhost:5000/users", userInfo)
+          .then((res) => {
+            if (res.data?.insertedId) {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Log in Success",
+                showConfirmButton: false,
+                timer: 1000,
+              });
+            }
+          })
+          .catch(() => {
+            // console.log()
+          });
         navigate("/");
       })
       .catch((err) => {

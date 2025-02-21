@@ -1,12 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { useContext, useState } from "react";
 import { MainContext } from "../../Providers/AuthContext";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const SingUp = () => {
   const [userName, setUserName] = useState("");
   const { handelSingUp } = useContext(MainContext);
+  const navigate = useNavigate();
 
   // handel name fild
   const hendelName = (e) => {
@@ -26,13 +29,30 @@ const SingUp = () => {
       id: data?.email,
       name: userName,
       email: data?.email,
-      password: data?.password,
+      photoUrl: data?.photoUrl,
     };
+    const password = data?.password;
 
-    handelSingUp(userData?.email, userData?.password)
+    // console.log(userData);
+    handelSingUp(userData.email, password)
       .then(() => {
-        // console.log();
-        // Tudu:
+        axios
+          .post("http://localhost:5000/users", userData)
+          .then((res) => {
+            if (res.data?.insertedId) {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Sing Up Success",
+                showConfirmButton: false,
+                timer: 1000,
+              });
+              navigate("/");
+            }
+          })
+          .catch(() => {
+            // console.log(err);
+          });
       })
       .catch(() => {
         // console.log();

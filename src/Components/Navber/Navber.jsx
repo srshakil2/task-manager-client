@@ -1,9 +1,12 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../../Providers/AuthContext";
 import { Link, NavLink } from "react-router-dom";
+import axios from "axios";
 
 const Navber = () => {
+  const [serverUser, setServerUser] = useState({});
   const { handelLogOut, user } = useContext(MainContext);
+
   // console.log(user?.photoURL);
   const handelLogOutUser = () => {
     handelLogOut();
@@ -14,9 +17,26 @@ const Navber = () => {
       <li className="text-white text-lg font-semibold">
         <NavLink to={"/"}>Home</NavLink>
       </li>
+      <li className="text-white text-lg font-semibold">
+        <NavLink to={""}>Task</NavLink>
+      </li>
+      <li className="text-white text-lg font-semibold">
+        <NavLink to={""}>Add Task</NavLink>
+      </li>
     </>
   );
 
+  const userEmail = user?.email;
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/useremail/${userEmail}`)
+      .then((res) => {
+        setServerUser(res.data);
+      })
+      .catch(() => {
+        // console.log(err);
+      });
+  }, [userEmail]);
   return (
     <div className="navbar bg-indigo-800 px-10 ">
       {/* Small device */}
@@ -58,15 +78,15 @@ const Navber = () => {
         </Link>
       </div>
       {/* Larger divice */}
+      {/* Larger divice */}
+      <div className="navbar-center hidden lg:flex ">
+        <ul className="menu menu-horizontal px-1">
+          {/* Larger divice */}
+          {linkData}
+        </ul>
+      </div>
       {/* Login & LogOut btn */}
       <div className="navbar-end flex items-center gap-5 mr-3">
-        {/* Larger divice */}
-        <div className="navbar-center hidden lg:flex ">
-          <ul className="menu menu-horizontal px-1">
-            {/* Larger divice */}
-            {linkData}
-          </ul>
-        </div>
         {/* user img */}
         <div className="dropdown dropdown-end">
           <div
@@ -75,7 +95,11 @@ const Navber = () => {
             className="btn btn-ghost btn-circle avatar"
           >
             <div className="w-10 rounded-full">
-              <img alt="user img" defaultChecked src={user?.photoURL} />
+              <img
+                alt="user img"
+                defaultChecked
+                src={serverUser?.photoUrl || user?.photoURL}
+              />
             </div>
           </div>
           <ul
@@ -83,10 +107,7 @@ const Navber = () => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
             <li>
-              <Link>Profile</Link>
-            </li>
-            <li>
-              <button onClick={handelLogOutUser} className="">
+              <button onClick={handelLogOutUser} className="md:text-lg">
                 Logout
               </button>
             </li>
