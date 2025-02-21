@@ -17,7 +17,7 @@ const Authcontext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loding, setLoding] = useState(true);
 
-  console.log("user is ------", user);
+  // console.log("user is ------", user);
   // log in func
   const handelLogin = (email, password) => {
     setLoding(true);
