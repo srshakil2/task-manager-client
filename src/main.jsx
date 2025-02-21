@@ -8,6 +8,8 @@ import LogIn from "./Components/Froms/LogIn";
 import SingUp from "./Components/Froms/SingUp";
 import Authcontext from "./Providers/AuthContext";
 import Privet from "./Providers/Privet";
+import AddTask from "./Components/Froms/AddTask";
+import Task from "./Components/Task/Task";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,24 @@ const router = createBrowserRouter([
         <Home></Home>
       </Privet>
     ),
+    children: [
+      {
+        path: "/addtask",
+        element: (
+          <Privet>
+            <AddTask></AddTask>
+          </Privet>
+        ),
+      },
+      {
+        path: "/task",
+        element: (
+          <Privet>
+            <Task></Task>
+          </Privet>
+        ),
+      },
+    ],
   },
   {
     path: "/login",

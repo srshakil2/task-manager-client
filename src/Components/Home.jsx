@@ -8,7 +8,7 @@ const Home = () => {
       <div>
         <Navber></Navber>
       </div>
-      <div className="min-h-screen -mt-16">
+      <div className="">
         <Outlet></Outlet>
       </div>
       <div>
