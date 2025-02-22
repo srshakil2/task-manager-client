@@ -1,10 +1,14 @@
+import { Dialog, DialogPanel } from "@headlessui/react";
 import axios from "axios";
+import { useState } from "react";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { FcEditImage } from "react-icons/fc";
 import Swal from "sweetalert2";
 
 /* eslint-disable react/prop-types */
 const Todo = ({ item, refetch }) => {
+  let [isOpen, setIsOpen] = useState(false);
+  const [singelData, setSingelData] = useState({});
   // handel delete btn
   const hanselDelet = (id) => {
     // console.log("id is--------", id);
@@ -38,6 +42,55 @@ const Todo = ({ item, refetch }) => {
       }
     });
   };
+  //   handel edit func
+
+  const handelUpdateData = (id) => {
+    axios
+      .get(`http://localhost:5000/taskdataupdate/${id}`)
+      .then((res) => {
+        setSingelData(res.data);
+        setIsOpen(true);
+      })
+      .catch(() => {
+        // console.log(err)
+      });
+  };
+
+  //   modal fucn
+
+  const handelUpdate = (e, _id) => {
+    e.preventDefault();
+    // console.log(_id, "update info");
+    const form = e.target;
+    const taskTitel = form.titel.value;
+    const description = form.info.value;
+    const selec = form.selected.value;
+
+    //
+    axios
+      .patch(`http://localhost:5000/taskdataupdate/update/${_id}`, {
+        taskTitel: taskTitel,
+        description: description,
+        selecet: selec,
+      })
+      .then((res) => {
+        // console.log(res.data);
+        if (res?.data?.modifiedCount === 1) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "data update success",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+          refetch();
+        }
+        setIsOpen(false);
+      })
+      .catch(() => {
+        // console.log(err.message)
+      });
+  };
   return (
     <div>
       <p className="card-title text-wrap">{item?.title.slice(0, 50)}</p>
@@ -47,7 +100,10 @@ const Todo = ({ item, refetch }) => {
         <p className="uppercase">{item.role}</p>
       </div>
       <div className="card-actions justify-end">
-        <button className="btn btn-primary">
+        <button
+          onClick={() => handelUpdateData(item?._id)}
+          className="btn btn-primary"
+        >
           <FcEditImage />
           Edit
         </button>
@@ -58,6 +114,78 @@ const Todo = ({ item, refetch }) => {
           <AiTwotoneDelete />
           Delete
         </button>
+      </div>
+      {/* modal */}
+      <div>
+        {/* modal Update for uniq id */}
+        <Dialog
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+          className="relative z-50"
+        >
+          <div className="fixed inset-0 flex justify-center  md:mt-24 mt-8 mb-10 ">
+            <DialogPanel className=" shadow-2xl rounded-xl bg-white p-12 ">
+              <form
+                onSubmit={(e) => handelUpdate(e, singelData?._id)}
+                className=" "
+              >
+                {/* form data */}
+                {/* marathon titel */}
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text text-lg font-semibold">
+                      Titel
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    defaultValue={singelData?.title}
+                    name="titel"
+                    className="input input-bordered "
+                  />
+                </div>
+                {/* info */}
+                <div className="form-control ">
+                  <label className="label">
+                    <span className="label-text text-lg font-semibold">
+                      Description
+                    </span>
+                  </label>
+                  <textarea
+                    className="textarea textarea-bordered"
+                    defaultValue={singelData?.drescription}
+                    name="info"
+                  ></textarea>
+                </div>
+                {/* selected */}
+                <div>
+                  <label>Selected</label>
+                  <select
+                    name="selected"
+                    className="select select-bordered w-full max-w-xs"
+                  >
+                    <option value={"todo"} selected>
+                      To-Do
+                    </option>
+                    <option value={"inprogress"}>In-progress</option>
+                    <option value={"done"}>Done</option>
+                  </select>
+                </div>
+                {/* btn form submit */}
+                <div className="flex gap-4 items-center justify-center mt-5">
+                  <button
+                    type="submit"
+                    // onClick={() => setIsOpen(false)}
+                    className="btn text-white text-xl  bg-indigo-400 hover:bg-indigo-500"
+                  >
+                    Update Now
+                  </button>
+                </div>
+              </form>
+            </DialogPanel>
+          </div>
+        </Dialog>
+        {/*  */}
       </div>
     </div>
   );
