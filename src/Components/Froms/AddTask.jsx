@@ -23,7 +23,7 @@ const AddTask = () => {
     };
     // console.log(fromDataAdd);
     axios
-      .post("http://localhost:5000/addtask", fromDataAdd)
+      .post("https://task-manage-server-eight.vercel.app/addtask", fromDataAdd)
       .then((res) => {
         if (res.data?.insertedId) {
           Swal.fire({

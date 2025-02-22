@@ -24,7 +24,9 @@ const Todo = ({ item, refetch }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/deleteitem?id=${id}`)
+          .delete(
+            `https://task-manage-server-eight.vercel.app/deleteitem?id=${id}`
+          )
           .then((res) => {
             // console.log(res.data);
             if (res.data?.deletedCount) {
@@ -46,7 +48,7 @@ const Todo = ({ item, refetch }) => {
 
   const handelUpdateData = (id) => {
     axios
-      .get(`http://localhost:5000/taskdataupdate/${id}`)
+      .get(`https://task-manage-server-eight.vercel.app/taskdataupdate/${id}`)
       .then((res) => {
         setSingelData(res.data);
         setIsOpen(true);
@@ -68,11 +70,14 @@ const Todo = ({ item, refetch }) => {
 
     //
     axios
-      .patch(`http://localhost:5000/taskdataupdate/update/${_id}`, {
-        taskTitel: taskTitel,
-        description: description,
-        selecet: selec,
-      })
+      .patch(
+        `https://task-manage-server-eight.vercel.app/taskdataupdate/update/${_id}`,
+        {
+          taskTitel: taskTitel,
+          description: description,
+          selecet: selec,
+        }
+      )
       .then((res) => {
         // console.log(res.data);
         if (res?.data?.modifiedCount === 1) {

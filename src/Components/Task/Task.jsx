@@ -13,7 +13,7 @@ const Task = () => {
 
   const { user } = useContext(MainContext);
   const [data, refetch] = useAllTaskGet(
-    `http://localhost:5000/alltask?email=${user?.email}`
+    `https://task-manage-server-eight.vercel.app/alltask?email=${user?.email}`
   );
 
   //

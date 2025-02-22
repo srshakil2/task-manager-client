@@ -38,7 +38,7 @@ const SingUp = () => {
     handelSingUp(userData.email, password)
       .then(() => {
         axios
-          .post("http://localhost:5000/users", userData)
+          .post("https://task-manage-server-eight.vercel.app/users", userData)
           .then((res) => {
             if (res.data?.insertedId) {
               Swal.fire({

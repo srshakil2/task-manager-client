@@ -47,7 +47,7 @@ const LogIn = () => {
           photoUrl: res?.user?.photoURL,
         };
         axios
-          .post("http://localhost:5000/users", userInfo)
+          .post("https://task-manage-server-eight.vercel.app/users", userInfo)
           .then((res) => {
             if (res.data?.insertedId) {
               Swal.fire({

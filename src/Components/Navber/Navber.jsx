@@ -29,7 +29,7 @@ const Navber = () => {
   const userEmail = user?.email;
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/useremail/${userEmail}`)
+      .get(`https://task-manage-server-eight.vercel.app/useremail/${userEmail}`)
       .then((res) => {
         setServerUser(res.data);
       })
