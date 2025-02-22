@@ -11,6 +11,7 @@ import Privet from "./Providers/Privet";
 import AddTask from "./Components/Froms/AddTask";
 import Task from "./Components/Task/Task";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import HomeBanner from "./Components/HomeBanner/HomeBanner";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -22,6 +23,14 @@ const router = createBrowserRouter([
       </Privet>
     ),
     children: [
+      {
+        path: "/",
+        element: (
+          <Privet>
+            <HomeBanner></HomeBanner>
+          </Privet>
+        ),
+      },
       {
         path: "/addtask",
         element: (

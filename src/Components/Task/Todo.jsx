@@ -129,11 +129,14 @@ const Todo = ({ item, refetch }) => {
                 onSubmit={(e) => handelUpdate(e, singelData?._id)}
                 className=" "
               >
+                <p className="text-3xl font-bold text-center mb-4">
+                  UpDate Task
+                </p>
                 {/* form data */}
                 {/* marathon titel */}
-                <div className="form-control">
+                <div className="form-control mb-4">
                   <label className="label">
-                    <span className="label-text text-lg font-semibold">
+                    <span className="label-text text-lg font-semibold text-black">
                       Titel
                     </span>
                   </label>
@@ -141,28 +144,30 @@ const Todo = ({ item, refetch }) => {
                     type="text"
                     defaultValue={singelData?.title}
                     name="titel"
-                    className="input input-bordered "
+                    className="input input-bordered mt-2"
                   />
                 </div>
                 {/* info */}
-                <div className="form-control ">
+                <div className="form-control mb-5">
                   <label className="label">
-                    <span className="label-text text-lg font-semibold">
+                    <span className="label-text text-lg font-semibold text-black">
                       Description
                     </span>
                   </label>
                   <textarea
-                    className="textarea textarea-bordered"
+                    className="textarea textarea-bordered mt-2"
                     defaultValue={singelData?.drescription}
                     name="info"
                   ></textarea>
                 </div>
                 {/* selected */}
-                <div>
-                  <label>Selected</label>
+                <div className="mb-5">
+                  <label className="text-black text-lg font-semibold">
+                    Selected
+                  </label>
                   <select
                     name="selected"
-                    className="select select-bordered w-full max-w-xs"
+                    className="select select-bordered w-full max-w-xs mt-2"
                   >
                     <option value={"todo"} selected>
                       To-Do
@@ -176,7 +181,7 @@ const Todo = ({ item, refetch }) => {
                   <button
                     type="submit"
                     // onClick={() => setIsOpen(false)}
-                    className="btn text-white text-xl  bg-indigo-400 hover:bg-indigo-500"
+                    className="btn text-white text-xl  bg-indigo-500 hover:bg-indigo-700"
                   >
                     Update Now
                   </button>

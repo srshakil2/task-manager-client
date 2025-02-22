@@ -4,6 +4,7 @@ import { MainContext } from "../../Providers/AuthContext";
 
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import Todo from "./Todo";
+import { Helmet } from "react-helmet";
 
 const Task = () => {
   const [todoItem, setTodoItem] = useState([]);
@@ -14,9 +15,6 @@ const Task = () => {
   const [data, refetch] = useAllTaskGet(
     `http://localhost:5000/alltask?email=${user?.email}`
   );
-  //   console.log(todoItem);
-  //   console.log(inprogressItem);
-  //   console.log(doneItem);
 
   //
   useEffect(() => {
@@ -56,6 +54,11 @@ const Task = () => {
   //
   return (
     <div className="min-h-screen">
+      <div>
+        <Helmet>
+          <title>My Task</title>
+        </Helmet>
+      </div>
       <div className="flex items-center justify-center mt-5">
         <img
           className="h-[80px]"
@@ -64,9 +67,11 @@ const Task = () => {
         />
         <h4 className="text-4xl font-bold ml-3">Task Management Board</h4>
       </div>
-      <h2 className="text-2xl font-bold text-center mb-4">Drag & Drop</h2>
+      <h2 className="text-2xl font-bold text-center mb-4 ml-5">
+        Drag & Drop Top to Bottom
+      </h2>
       {/* main parent dnd */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:px-10 md:px-7 px-5">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:px-10 md:px-7 px-5 pb-5">
         {/* dnd todo */}
         <div className="p-4 bg-purple-100 rounded-lg">
           <p className="text-center text-2xl font-bold mb-5">To-Do</p>

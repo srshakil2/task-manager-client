@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { MainContext } from "../../Providers/AuthContext";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 const SingUp = () => {
   const [userName, setUserName] = useState("");
@@ -61,6 +62,11 @@ const SingUp = () => {
 
   return (
     <div className="hero min-h-screen ">
+      <div>
+        <Helmet>
+          <title>Sing Up</title>
+        </Helmet>
+      </div>
       <div className="card bg-base-100 shrink-0 shadow-2xl md:w-6/12">
         <div className="text-center mt-10 md:w-1/2 mx-auto">
           <p className="w-full text-3xl font-bold">Sing Up Now</p>

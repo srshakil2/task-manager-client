@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { MainContext } from "../../Providers/AuthContext";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { Helmet } from "react-helmet";
 
 const LogIn = () => {
   const { handelGoogleLogin, handelLogin } = useContext(MainContext);
@@ -70,11 +71,16 @@ const LogIn = () => {
 
   return (
     <div className="hero min-h-screen ">
+      <div>
+        <Helmet>
+          <title>Log In</title>
+        </Helmet>
+      </div>
       <div className="card bg-base-100 shrink-0 shadow-2xl md:w-6/12">
         <div className="text-center mt-10 md:w-1/2 mx-auto">
           <p className="w-full text-3xl font-bold">Log In Now</p>
           <div onClick={googleLoginUser} className="btn mt-7 md:w-1/2 mx-auto ">
-            <FcGoogle className="text-3xl"></FcGoogle>
+            <FcGoogle className="text-3xl "></FcGoogle>
             <span className="text-xl text-nowrap">Google LogIn</span>
           </div>
         </div>

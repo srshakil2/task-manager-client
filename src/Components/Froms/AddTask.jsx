@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { MainContext } from "../../Providers/AuthContext";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 const AddTask = () => {
   const [uptitle, setUptitle] = useState("");
@@ -41,6 +42,11 @@ const AddTask = () => {
 
   return (
     <div className="md:w-7/12 mx-auto mt-10 min-h-screen">
+      <div>
+        <Helmet>
+          <title>Add Task</title>
+        </Helmet>
+      </div>
       <div className="hero-content">
         <div className="card bg-base-100 w-full  shrink-0 shadow-2xl">
           <h3 className=" text-center text-3xl font-bold mt-10">
@@ -84,7 +90,7 @@ const AddTask = () => {
             <br />
             <div>
               <input
-                className="btn w-full bg-indigo-400 hover:bg-indigo-600 text-white font-bold text-lg "
+                className="btn w-full bg-indigo-500 hover:bg-indigo-700 text-white font-bold text-lg "
                 type="submit"
               />
             </div>
